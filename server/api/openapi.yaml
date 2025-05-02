@@ -1,0 +1,347 @@
+openapi: 3.0.3
+info:
+  title: Commander API
+  version: 1.0.0
+paths:
+  /api/v1/members:
+    get:
+      summary: Get all members
+      description: Retrieve a list of all members.
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Member"
+  /api/v1/members/{member_id}:
+    get:
+      summary: Get all members
+      description: Retrieve a list of all members.
+      parameters:
+        - name: member_id
+          in: path
+          required: true
+          description: The ID of the member to retrieve.
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Member"
+  /api/v1/operations:
+    get:
+      summary: Get all operations
+      description: Retrieve a list of all operations.
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of operations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Operation"
+    post:
+      summary: Create an operation
+      description: Create a new operation.
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Operation created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: abc123
+                  name:
+                    type: string
+                    example: OperationName
+                  members:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Member"
+
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/operations/{operation_id}:
+    put:
+      summary: Update an operation
+      description: Update an existing operation.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: operation_id
+          in: path
+          required: true
+          description: The ID of the operation to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/Operation"
+      responses:
+        "200":
+          description: Operation updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: abc123
+                  name:
+                    type: string
+                    example: OperationName
+                  members:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Member"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      summary: Get an operation
+      description: Retrieve a specific operation by ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: operation_id
+          in: path
+          required: true
+          description: The ID of the operation to retrieve.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A single operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Operation"
+        "404":
+          description: Operation not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/login:
+    get:
+      summary: Login
+      description: Login to the system.
+      parameters:
+        - name: code
+          in: query
+          required: true
+          description: The login code.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: abc123xyz
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/auth:
+    get:
+      summary: Authenticate
+      description: Authenticate the user.
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Authenticated"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/ships:
+    get:
+      summary: Get all ships
+      description: Retrieve a list of all ships.
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of ships
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ship"
+  /ws:
+    get:
+      summary: WebSocket connection
+      description: Establish a WebSocket connection.
+      responses:
+        "200":
+          description: Successful WebSocket connection
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Operation:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        name:
+          type: string
+          example: OperationName
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/Member"
+    Ship:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ship123
+        name:
+          type: string
+          example: USS Enterprise
+        positions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Member"
+        crew:
+          type: integer
+          example: 100
+        scu:
+          type: integer
+          example: 50
+    Position:
+      type: object
+      properties:
+        id:
+          type: string
+          example: position123
+        name:
+          type: string
+          example: Captain
+        member:
+          $ref: "#/components/schemas/Member"
+    Squad:
+      type: object
+      properties:
+        id:
+          type: string
+          example: squad456
+        name:
+          type: string
+          example: Alpha Squad
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/Member"
+    Member:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        name:
+          type: string
+          example: TheBestGamer
+        rank:
+          type: string
+          example: Captain
+        stand_by:
+          type: boolean
+          example: true
+        assigned:
+          type: boolean
+          example: false
+        ship_id:
+          type: string
+          example: ship123
+        squad_id:
+          type: string
+          example: squad456
+        connected:
+          type: boolean
+          example: true
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "An error occurred"
+        message:
+          type: string
+          example: "Invalid request"

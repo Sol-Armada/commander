@@ -1,22 +1,10 @@
 <template>
   <v-main>
-    <!-- <web-socket /> -->
     <router-view />
   </v-main>
 </template>
 
 <script setup>
-import { useAppStore } from "@/stores/app";
-import { useWebsocketStore } from "@/stores/websocket";
-import { onMounted } from "vue";
-
-const appStore = useAppStore();
-const wsStore = useWebsocketStore();
-
-onMounted(() => {
-  wsStore.connect();
-  appStore.getSelf();
-});
 </script>
 
 <style lang="scss">

@@ -6,11 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build-dev": "vite build --mode development",
+    "build-staging": "vite build --mode staging",
     "preview": "vite preview",
     "lint": "eslint . --fix"
   },
   "dependencies": {
     "@mdi/font": "7.4.47",
+    "@protobuf-ts/grpc-transport": "^2.9.6",
+    "@protobuf-ts/grpcweb-transport": "^2.9.6",
+    "@protobuf-ts/plugin": "^2.9.6",
+    "@protobuf-ts/runtime": "^2.9.6",
+    "@protobuf-ts/twirp-transport": "^2.9.6",
+    "protoc-gen-grpc-web": "^1.5.0",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
     "vuetify": "^3.6.14"
