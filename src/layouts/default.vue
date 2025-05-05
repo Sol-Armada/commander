@@ -1,6 +1,5 @@
 <template>
   <v-main>
-    <!-- <web-socket /> -->
     <router-view />
   </v-main>
 </template>

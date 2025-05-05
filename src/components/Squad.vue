@@ -1,5 +1,11 @@
 <template>
-  <v-col cols="3">
+  <v-col
+    cols="3"
+    lg="3"
+    md="4"
+    sm="6"
+    xs="12"
+  >
     <v-card
       class="squad"
       :title="squad.name"
@@ -65,12 +71,6 @@
         >
           Cancel
         </v-btn>
-        <v-btn
-          variant="text"
-          @click="renameSquad"
-        >
-          Rename
-        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -108,7 +108,6 @@ function onDrop(event) {
   event.preventDefault();
   event.target.style.backgroundColor = "";
 
-  // check if the target has the class 'stand-by-list'
   if (event.target.classList.contains("drop-zone")) {
     const memberId = event.dataTransfer.getData("text");
     operationStore.addMemberToSquad(event.target.dataset.squadId, memberId);
@@ -124,54 +123,6 @@ function onClick(event) {
 function remove() {
   operationStore.removeSquad(props.squad.id);
 }
-
-// function onDrop(event) {
-//   event.preventDefault();
-
-//   // if (event.target.classList.contains('position')) {
-//   const memberId = event.dataTransfer.getData("text");
-//   membersStore.members.forEach((member) => {
-//     if (member.id == memberId) {
-//       member.assigned = true;
-//       member.standby = false;
-//       member.squadId = squadRef.value.id;
-//       props.addToOperation(member);
-//       membersStore.updateMember(member);
-
-//       operationStore.addMemberToSquad(
-//         props.operation.id,
-//         squadRef.value.id,
-//         member
-//       );
-//       return;
-//     }
-//   });
-//   // }
-
-//   event.target.style.backgroundColor = "";
-// }
-
-// function onMemberClick2(member) {
-//   membersStore.resetMember(member.id);
-//   props.onMemberClick(member);
-// }
-
-// function renameDialogFunc() {
-//   renameDialog.value = true;
-//   renameName.value = props.operation.squads.find(
-//     (o) => o.id == props.squad.id
-//   ).name;
-// }
-
-// function renameSquad() {
-//   renameDialog.value = false;
-
-//   operationStore.renameSquad(
-//     props.operation.id,
-//     squadRef.value.id,
-//     renameName.value
-//   );
-// }
 </script>
 
 <style lang="scss" scoped>

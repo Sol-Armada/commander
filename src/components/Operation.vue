@@ -1,79 +1,57 @@
 <template>
-  <v-container
-    fluid
-    class="full-height-container pa-2"
-    style="overflow-y: hidden;"
-  >
+  <v-container fluid>
     <v-row>
-      <v-col cols="12">
-        <h1 class="text-center">
-          {{ operation.name }}
-        </h1>
-      </v-col>
-    </v-row>
-    <v-row no-gutters>
-      <Members
-        :members="filteredMembers"
-        :loading="loading"
-      />
-
-      <v-col
-        cols="10"
-        class="operations-container"
-      >
-        <StandBy />
-
-        <v-window>
-          <v-window-item>
-            <Board />
-          </v-window-item>
-        </v-window>
+      <v-col cols="2">
+        <v-row class="sticky">
+          <v-col cols="12">
+            <v-text-field
+              v-if="operationStore.isCreator()"
+              v-model="opName"
+              placeholder="Rename operation"
+              variant="plain"
+            />
+            <div v-else>
+              {{ operation.name }}
+            </div>
+          </v-col>
+          <Members
+            :members="filteredMembers"
+            :loading="loading"
+          />
+        </v-row>
       </v-col>
 
-      <v-dialog
-        v-model="renameDialog"
-        width="500"
-      >
-        <v-card>
-          <v-card-title>
-            Rename Operation
-          </v-card-title>
-          <v-card-text>
-            <v-text-field v-model="newOpName" />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              variant="text"
-              @click="renameDialog = false"
-            >
-              Cancel
-            </v-btn>
-            <v-btn
-              variant="text"
-              @click="operation.rename(newOpName)"
-            >
-              Rename
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <v-col cols="10">
+        <v-row class="sticky">
+          <v-col>
+            <StandBy />
+            <Controls />
+          </v-col>
+        </v-row>
+        <v-row>
+          <Board />
+        </v-row>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useMembersStore } from "@/stores/members";
 import { storeToRefs } from "pinia";
 import { useOperationStore } from "@/stores/operation";
 
 const operationStore = useOperationStore();
 const membersStore = useMembersStore();
-const renameDialog = ref(false);
-const newOpName = ref("");
+
+const { currentOperation } = storeToRefs(operationStore);
 
 const { loading } = storeToRefs(membersStore);
+const opName = ref(currentOperation.value.name);
+watch(opName, (newName) => {
+  operationStore.renameOperation(newName);
+});
 
 defineProps({
   operation: {
@@ -91,14 +69,11 @@ const filteredMembers = computed(() => {
 </script>
 
 <style lang="scss">
-.full-height-container {
-  height: 100vh; /* Full viewport height */
-  display: flex;
-  flex-direction: column;
-}
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
-.operations-container {
-  flex: 1; /* Ensures it takes the remaining space */
-  overflow-y: auto; /* Allows scrolling if content overflows */
+  background-color: rgb(var(--v-theme-background));
 }
 </style>

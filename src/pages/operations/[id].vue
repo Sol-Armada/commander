@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <PageLoader v-if="loading" />
-    <Operation
-      v-else-if="currentOperation"
-      :operation="currentOperation"
-    />
-    <div v-else>
-      <h1>Operation not found</h1>
-      <v-btn
-        color="primary"
-        variant="tonal"
-        prepend-icon="mdi-home"
-        @click="$router.push('/')"
-      >
-        Go to Home
-      </v-btn>
-    </div>
+  <PageLoader v-if="loading" />
+  <Operation
+    v-else-if="currentOperation"
+    :operation="currentOperation"
+  />
+  <div v-else>
+    <h1>Operation not found</h1>
+    <v-btn
+      color="primary"
+      variant="tonal"
+      prepend-icon="mdi-home"
+      @click="$router.push('/')"
+    >
+      Go to Home
+    </v-btn>
   </div>
 </template>
 
@@ -41,6 +39,6 @@ onMounted(() => {
 
   setTimeout(() => {
     loading.value = false;
-  }, 1000);
+  }, 500);
 });
 </script>

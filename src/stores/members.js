@@ -8,6 +8,7 @@ import { WebSocketChannels, WebSocketTypes } from '@/classes/ws'
 const wsStore = useWebsocketStore()
 
 const rankToTag = {
+    0: "",
     1: "[ADM]",
     2: "[CDR]",
     3: "[LT]",
@@ -44,7 +45,11 @@ export const useMembersStore = defineStore('members', () => {
     }
 
     function getNameWithRank(member) {
-        return rankToTag[member.rank] + " " + member.name
+        if (member.rank === 0) {
+            return member.name
+        }
+        let name = rankToTag[member.rank] + " " + member.name
+        return name
     }
 
     function getRankName(rank) {
@@ -75,6 +80,21 @@ export const useMembersStore = defineStore('members', () => {
     getMembers()
         .then(res => {
             members.value = res
+
+            // sort the members by rank then name
+            members.value.sort((a, b) => {
+                if (a.rank === b.rank) {
+                    return a.name.localeCompare(b.name)
+                }
+                if (a.rank === 0) {
+                    return 1
+                }
+                if (b.rank === 0) {
+                    return -1
+                }
+                return a.rank - b.rank
+            })
+
             loading.value = false
         })
         .catch(err => {

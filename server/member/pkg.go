@@ -67,6 +67,10 @@ func List(dbc *stores.Client) []*Member {
 			continue
 		}
 
+		if member.Rank == ranks.None {
+			member.Rank = ranks.Guest
+		}
+
 		m := &Member{
 			Id:   member.Id,
 			Name: member.Name,

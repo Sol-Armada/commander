@@ -78,10 +78,6 @@ function onDrop(event) {
 .stand-by-container {
   min-height: 7rem;
 
-  position: sticky;
-  top: 0;
-  z-index: 1;
-
   background: rgb(var(--v-theme-surface));
   color: rgb(var(--v-theme-on-surface));
 }

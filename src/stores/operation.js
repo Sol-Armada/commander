@@ -1,15 +1,16 @@
 // Ships
 import { defineStore } from 'pinia'
-import { useShipsStore } from '@/stores/ships'
 import { useMembersStore } from '@/stores/members'
 import { useWebsocketStore } from '@/stores/websocket'
 import { ref } from 'vue'
 import { getOperation as apiGetOperation, getOperations } from '@/api'
 import { WebSocketChannels, WebSocketTypes } from '@/classes/ws'
 import { generateId } from '@/utility'
+import { useAppStore } from './app'
 
 const membersStore = useMembersStore()
 const wsStore = useWebsocketStore()
+const appStore = useAppStore()
 
 export const useOperationStore = defineStore('operations', () => {
     const loading = ref(true)
@@ -208,6 +209,19 @@ export const useOperationStore = defineStore('operations', () => {
         wsStore.send(WebSocketChannels.OPERATIONS, WebSocketTypes.UPDATE, currentOperation.value)
     }
 
+    function isCreator() {
+        if (currentOperation.value === null) {
+            return false
+        }
+        if (currentOperation.value.creator === null || currentOperation.value.creator === undefined) {
+            return false
+        }
+        if (appStore.member.id === currentOperation.value.creator) {
+            return true
+        }
+        return false
+    }
+
     getOperations().then(res => {
         console.debug("Operations fetched", res)
         operations.value = res
@@ -222,8 +236,15 @@ export const useOperationStore = defineStore('operations', () => {
             addOperation(res.data);
         }
         if (res.type === WebSocketTypes.UPDATED) {
-            if (res.data.id === currentOperation.value.id) {
+            if (currentOperation.value !== null && res.data.id === currentOperation.value.id) {
                 currentOperation.value = res.data;
+            }
+
+            const operation = operations.value.find(o => o.id === res.data.id)
+            if (operation) {
+                operations.value[operations.value.indexOf(operation)] = res.data
+            } else {
+                operations.value.push(res.data)
             }
         }
         if (res.type === WebSocketTypes.DELETED) {
@@ -253,5 +274,6 @@ export const useOperationStore = defineStore('operations', () => {
         getOnStandBy,
         hasMember,
         operations,
+        isCreator,
     }
 })

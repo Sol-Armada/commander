@@ -41,39 +41,39 @@ function onDragEnd(event) {
   border-left: 3px solid rgb(var(--v-theme-primary));
 
   &.Admiral {
-    border-color: rgb(var(--v-theme-admiral));
+    border-color: rgb(var(--v-admiral));
   }
 
   &.Commander {
-    border-color: rgb(var(--v-theme-commander));
+    border-color: rgb(var(--v-commander));
   }
 
   &.Lieutenant {
-    border-color: rgb(var(--v-theme-lieutenant));
+    border-color: rgb(var(--v-lieutenant));
   }
 
   &.Specialist {
-    border-color: rgb(var(--v-theme-specialist));
+    border-color: rgb(var(--v-specialist));
   }
 
   &.Technician {
-    border-color: rgb(var(--v-theme-technician));
+    border-color: rgb(var(--v-technician));
   }
 
   &.Member {
-    border-color: rgb(var(--v-theme-member));
+    border-color: rgb(var(--v-member));
   }
 
   &.Recruit {
-    border-color: rgb(var(--v-theme-recruit));
+    border-color: rgb(var(--v-recruit));
   }
 
   &.Guest {
-    border-color: rgb(var(--v-theme-guest));
+    border-color: rgb(var(--v-guest));
   }
 
   &.Ally {
-    border-color: rgb(var(--v-theme-ally));
+    border-color: rgb(var(--v-ally));
   }
 
   :hover {

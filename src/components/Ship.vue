@@ -1,5 +1,11 @@
 <template>
-  <v-col cols="3">
+  <v-col
+    cols="3"
+    lg="3"
+    md="4"
+    sm="6"
+    xs="12"
+  >
     <v-card
       class="ship"
       :title="ship.name"
@@ -52,12 +58,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-import { useMembersStore } from "@/stores/members";
 import { useOperationStore } from "@/stores/operation";
 
-const membersStore = useMembersStore();
 const operationStore = useOperationStore();
 
 const props = defineProps({
@@ -67,8 +69,6 @@ const props = defineProps({
     default: () => ({}),
   },
 });
-
-const shipRef = ref(props.ship);
 
 function onDragOver(event) {
   event.preventDefault();
@@ -84,46 +84,12 @@ function onDrop(event) {
   event.preventDefault();
 
   if (event.target.classList.contains("position")) {
-    // replace with member
     const shipId = event.target.dataset.shipId;
     const positionId = parseInt(event.target.dataset.id);
     const memberId = event.dataTransfer.getData("text");
 
-    console.log("shipId", shipId);
-
     operationStore.addToShipPosition(shipId, positionId, memberId);
-
-    // membersStore.members.forEach((member) => {
-    //   if (member.id == memberId) {
-    //     const positionId = parseInt(
-    //       getParent(event.target, "position").dataset.id
-    //     );
-    //     shipRef.value.positions[positionId].member = member;
-    //     member.assigned = true;
-    //     member.shipId = props.ship.id;
-
-    //     shipRef.value.positions.forEach((position) => {
-    //       if (
-    //         position.member &&
-    //         position.member.id == member.id &&
-    //         position.id != positionId
-    //       ) {
-    //         position.member = null;
-    //       }
-    //     });
-
-    //     return;
-    //   }
-    // });
   }
-}
-
-function getParent(ele, cls) {
-  let e = ele;
-  do {
-    e = e.parentElement;
-  } while (e && !e.classList.contains(cls));
-  return e;
 }
 
 function onClick(event) {
@@ -139,7 +105,6 @@ function remove() {
 
 <style lang="scss" scoped>
 .ship {
-  // darken background
   background-color: rgb(var(--v-theme-surface-darken-2));
 }
 </style>
