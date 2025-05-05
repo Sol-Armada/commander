@@ -1,0 +1,14 @@
+{
+    "vetur.format.defaultFormatter.html": "js-beautify-html",
+    "[vue]": {
+        "editor.defaultFormatter": "octref.vetur",
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.trimAutoWhitespace": true,
+        "editor.detectIndentation": false,
+        "editor.formatOnSave": true,
+    },
+    "[dotenv]": {
+        "editor.formatOnSave": false,
+    },
+}

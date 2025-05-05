@@ -1,0 +1,42 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"command": "yarn",
+			"args": [
+				"dev"
+			],
+			"label": "yarn: dev",
+			"detail": "vite",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "vite",
+				"pattern": {
+					"regexp": "\\s*VITE\\s+v\\d+\\.\\d+\\.\\d+\\s+ready\\s+in\\s+\\d+\\s+ms",
+					"file": 1,
+					"location": 2,
+					"message": 0
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "\\s*VITE\\s+v\\d+\\.\\d+\\.\\d+\\s+starting",
+					"endsPattern": "\\s*VITE\\s+v\\d+\\.\\d+\\.\\d+\\s+ready\\s+in\\s+\\d+\\s+ms"
+				}
+			}
+		},
+		{
+			"label": "Terminate All Tasks",
+			"command": "echo ${input:terminate}",
+			"type": "shell"
+		}
+	],
+	"inputs": [
+		{
+			"id": "terminate",
+			"type": "command",
+			"command": "workbench.action.tasks.terminate",
+			"args": "terminateAll"
+		}
+	]
+}
