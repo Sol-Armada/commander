@@ -20,4 +20,4 @@ RUN go build -o ./bin/commander .
 FROM ubuntu:latest
 WORKDIR /app
 COPY --from=backend /app/bin/commander .
-# CMD [ "/app/commander" ]
+CMD [ "/app/commander" ]
