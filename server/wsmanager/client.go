@@ -11,7 +11,6 @@ import (
 
 type Client struct {
 	Id       string
-	Send     chan Message
 	LastSeen time.Time
 	Active   bool
 	MemberId string
@@ -22,7 +21,6 @@ type Client struct {
 func (h *Hub) NewClient(conn *ws.Conn) *Client {
 	client := &Client{
 		Id:       xid.New().String(),
-		Send:     make(chan Message),
 		LastSeen: time.Now(),
 		Active:   true,
 

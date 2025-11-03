@@ -56,7 +56,6 @@ func (h *Hub) Run() {
 		case client := <-h.unregister:
 			if _, ok := h.clients[client]; ok {
 				client.Active = false
-				close(client.Send)
 				delete(h.clients, client)
 				h.logger.Debug("Client unregistered", "id", client.Id)
 			}

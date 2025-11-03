@@ -2,7 +2,7 @@ module github.com/sol-armada/commander
 
 go 1.24.2
 
-replace github.com/sol-armada/sol-bot v1.9.6 => ../../sol-bot
+// replace github.com/sol-armada/sol-bot v1.9.8 => ../../sol-bot
 
 require (
 	github.com/docker/docker v28.1.1+incompatible
@@ -11,7 +11,7 @@ require (
 	github.com/oapi-codegen/echo-middleware v1.0.2
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/samber/slog-multi v1.4.0
-	github.com/sol-armada/sol-bot v1.9.6
+	github.com/sol-armada/sol-bot v1.9.8
 	github.com/valkey-io/valkey-glide/go v1.3.2
 )
 

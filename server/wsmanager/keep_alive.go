@@ -8,7 +8,7 @@ import (
 
 func (h *Hub) KeepAlive() {
 	for {
-		if len(h.clients) >= 0 {
+		if len(h.clients) > 0 {
 			h.broadcast <- Message{
 				Channel: ChannelKeepAlive,
 				Type:    MessageTypePing,

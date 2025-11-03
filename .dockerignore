@@ -1,0 +1,8 @@
+node_modules
+logs
+.vscode
+.env*
+Dockerfile
+README.md
+server/dist
+server/bin
